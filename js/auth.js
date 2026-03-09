@@ -1,14 +1,16 @@
 // js/auth.js
 (function() {
-    const validPages = ['tasks.html', 'add-task.html', 'signin.html', 'add-user.html', ''];
+    const validPages = ['index.html', 'tasks.html', 'add-task.html', 'signin.html', 'add-user.html', ''];
     let currentPath = window.location.pathname.split('/').pop();
     currentPath = currentPath.split('?')[0].split('#')[0]; // strip parameters if any
     
-    if (currentPath === '') {
-        currentPath = 'tasks.html';
-    }
-
     const isLoggedIn = localStorage.getItem('usernameLoggedIn');
+
+    // If we are at the root (empty path) or at index.html, redirect based on auth status
+    if (currentPath === '' || currentPath === 'index.html') {
+        window.location.replace(isLoggedIn ? 'tasks.html' : 'signin.html');
+        return;
+    }
 
     if (!validPages.includes(currentPath)) {
         window.location.replace(isLoggedIn ? 'tasks.html' : 'signin.html');

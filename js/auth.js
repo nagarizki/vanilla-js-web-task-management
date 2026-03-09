@@ -1,29 +1,32 @@
 // js/auth.js
 (function() {
-    const validPages = ['index.html', 'tasks.html', 'add-task.html', 'signin.html', 'add-user.html', ''];
+    const pages = ['index', 'tasks', 'add-task', 'signin', 'add-user'];
+    
     let currentPath = window.location.pathname.split('/').pop();
     currentPath = currentPath.split('?')[0].split('#')[0]; // strip parameters if any
     
+    // Normalize: remove .html extension for comparison
+    const normalizedPage = currentPath.replace(/\.html$/, '');
     const isLoggedIn = localStorage.getItem('usernameLoggedIn');
 
-    // If we are at the root (empty path) or at index.html, redirect based on auth status
-    if (currentPath === '' || currentPath === 'index.html') {
+    // If we are at the root (empty path) or at index, redirect based on auth status
+    if (normalizedPage === '' || normalizedPage === 'index') {
         window.location.replace(isLoggedIn ? 'tasks.html' : 'signin.html');
         return;
     }
 
-    if (!validPages.includes(currentPath)) {
+    if (!pages.includes(normalizedPage)) {
         window.location.replace(isLoggedIn ? 'tasks.html' : 'signin.html');
         return;
     }
 
     if (isLoggedIn) {
-        if (currentPath === 'signin.html' || currentPath === 'add-user.html') {
+        if (normalizedPage === 'signin' || normalizedPage === 'add-user') {
             window.location.replace('tasks.html');
             return;
         }
     } else {
-        if (currentPath !== 'signin.html' && currentPath !== 'add-user.html') {
+        if (normalizedPage !== 'signin' && normalizedPage !== 'add-user') {
             window.location.replace('signin.html');
             return;
         }
@@ -37,7 +40,8 @@
                 const href = link.getAttribute('href');
                 if (href && !href.startsWith('http') && !href.startsWith('#')) {
                     const pageName = href.split('?')[0].split('#')[0].split('/').pop();
-                    if (pageName && pageName.endsWith('.html') && !validPages.includes(pageName)) {
+                    const normalizedTarget = pageName.replace(/\.html$/, '');
+                    if (normalizedTarget && !pages.includes(normalizedTarget)) {
                         e.preventDefault();
                         window.location.replace(isLoggedIn ? 'tasks.html' : 'signin.html');
                     }

@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(result.success) {
             // alert('User berhasil ditambahkan!');
-            return window.location.href = '../signin.html';
+            return window.location.href = 'signin.html';
         } else {
             alert('Gagal menambahkan user!');
         }

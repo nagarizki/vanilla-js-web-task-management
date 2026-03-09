@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(result.success) {
             localStorage.setItem("usernameLoggedIn", usernameByInput);
             console.log(result.message + result.username);
-            return window.location.href = '../tasks.html';
+            return window.location.href = 'tasks.html';
         } else {
             alert('username not found, please sign up first');
             console.log(result.message);

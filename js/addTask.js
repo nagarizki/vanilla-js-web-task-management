@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = taskManager.saveTask(taskData);
 
         if(result.success) {
-            return window.location.href = '../tasks.html';
+            return window.location.href = 'tasks.html';
         } else {
             alert('Gagal menambahkan task!');
         }
